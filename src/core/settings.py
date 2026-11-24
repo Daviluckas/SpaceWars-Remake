@@ -10,3 +10,7 @@ FPS = 60
 # Cores (RGB)
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
+
+# Configurações do jogador
+PLAYER_WIDTH = 96
+PLAYER_HEIGHT = 64

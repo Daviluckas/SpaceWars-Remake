@@ -3,6 +3,7 @@ import pygame
 
 from src.core import settings
 from src.core.asset_manager import AssetManager
+from src.entities.player import Player
 
 class Game:
     def __init__(self):
@@ -18,6 +19,7 @@ class Game:
 
         self.clock = pygame.time.Clock()
         self.running = True
+        self.player = Player(self, 352, 500)
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -29,6 +31,7 @@ class Game:
 
     def draw(self):
         self.screen.fill(settings.BLACK)
+        self.screen.blit(self.player.image, self.player.rect)
         pygame.display.flip()
 
     def run(self):
