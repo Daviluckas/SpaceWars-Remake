@@ -22,6 +22,7 @@ class Game:
 
         self.clock = pygame.time.Clock()
         self.running = True
+        self.score = 0
 
         self.player = Player(self, 352, 500)
         self.enemies = pygame.sprite.Group()
@@ -79,7 +80,9 @@ class Game:
 
         for enemies_hit in collisions.values():
             for enemy in enemies_hit:
-                enemy.take_damage()
+                if enemy.take_damage():
+                    self.score += settings.ENEMY_SCORE
+                    
 
     def draw(self):
         self.screen.fill(settings.BLACK)

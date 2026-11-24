@@ -12,3 +12,6 @@ class Enemy(Entity):
 
         if self.health <= 0:
             self.kill()
+            return True
+
+        return False
