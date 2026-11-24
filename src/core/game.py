@@ -70,6 +70,7 @@ class Game:
         self.enemy_formation.update()
         self.handle_collisions()
 
+
     def handle_collisions(self):
         collisions = pygame.sprite.groupcollide(
             self.player.projectiles,
@@ -82,7 +83,16 @@ class Game:
             for enemy in enemies_hit:
                 if enemy.take_damage():
                     self.score += settings.ENEMY_SCORE
-                    
+
+        player_collision = pygame.sprite.spritecollide(
+            self.player,
+            self.enemies,
+            True
+        )
+
+        if player_collision:
+            self.player.take_damage()
+
 
     def draw(self):
         self.screen.fill(settings.BLACK)

@@ -33,3 +33,6 @@ ENEMY_VERTICAL_SPACING = 25
 
 # Configurações de pontuação
 ENEMY_SCORE = 10
+
+# Configurações de vidas
+PLAYER_LIVES = 3

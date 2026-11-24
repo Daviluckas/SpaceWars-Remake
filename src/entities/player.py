@@ -20,6 +20,7 @@ class Player(Entity):
         super().__init__(game, image, x, y)
 
         self.projectiles = pygame.sprite.Group()
+        self.lives = settings.PLAYER_LIVES
 
 
     def update(self):
@@ -50,3 +51,7 @@ class Player(Entity):
         )
 
         self.projectiles.add(projectile)
+
+
+    def take_damage(self):
+        self.lives -= 1
