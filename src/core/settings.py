@@ -14,3 +14,4 @@ WHITE = (255, 255, 255)
 # Configurações do jogador
 PLAYER_WIDTH = 96
 PLAYER_HEIGHT = 64
+PLAYER_SPEED = 5

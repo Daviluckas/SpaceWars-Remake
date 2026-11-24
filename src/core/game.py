@@ -27,7 +27,7 @@ class Game:
                 self.running = False
 
     def update(self):
-        pass
+        self.player.update()
 
     def draw(self):
         self.screen.fill(settings.BLACK)
