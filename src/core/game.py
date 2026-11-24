@@ -6,7 +6,7 @@ from src.core.asset_manager import AssetManager
 from src.entities.player import Player
 from src.entities.enemies.enemy import Enemy
 from src.systems.enemy_formation import EnemyFormation
-
+from src.ui.hud import HUD
 
 class Game:
     def __init__(self):
@@ -23,6 +23,7 @@ class Game:
         self.clock = pygame.time.Clock()
         self.running = True
         self.score = 0
+        self.hud = HUD(self)
 
         self.player = Player(self, 352, 500)
         self.enemies = pygame.sprite.Group()
@@ -99,6 +100,7 @@ class Game:
         self.enemies.draw(self.screen)
         self.player.projectiles.draw(self.screen)
         self.screen.blit(self.player.image, self.player.rect)
+        self.hud.draw()
         pygame.display.flip()
 
     def run(self):
