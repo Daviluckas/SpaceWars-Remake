@@ -22,6 +22,7 @@ class Game:
 
         self.clock = pygame.time.Clock()
         self.running = True
+        self.game_over = False
         self.score = 0
         self.hud = HUD(self)
 
@@ -67,9 +68,16 @@ class Game:
                     self.player.shoot()
 
     def update(self):
+
+        if self.game_over:
+            return
+        
         self.player.update()
         self.enemy_formation.update()
         self.handle_collisions()
+
+        if self.player.lives <= 0:
+            self.game_over = True
 
 
     def handle_collisions(self):
@@ -101,7 +109,31 @@ class Game:
         self.player.projectiles.draw(self.screen)
         self.screen.blit(self.player.image, self.player.rect)
         self.hud.draw()
+
+        if self.game_over:
+            self.draw_game_over()
+
         pygame.display.flip()
+
+
+    def draw_game_over(self):
+        font = pygame.font.Font(None, 72)
+
+        game_over_text = font.render(
+            "GAME OVER",
+            True,
+            (255, 0, 0)
+        )
+
+        text_rect = game_over_text.get_rect(
+            center=(
+                settings.SCREEN_WIDTH // 2,
+                settings.SCREEN_HEIGHT // 2
+            )
+        )
+
+        self.screen.blit(game_over_text, text_rect)
+
 
     def run(self):
         while self.running:
