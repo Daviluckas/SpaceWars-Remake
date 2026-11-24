@@ -5,6 +5,8 @@ from src.core import settings
 from src.core.asset_manager import AssetManager
 from src.entities.player import Player
 from src.entities.enemies.enemy import Enemy
+from src.systems.enemy_formation import EnemyFormation
+
 
 class Game:
     def __init__(self):
@@ -20,14 +22,38 @@ class Game:
 
         self.clock = pygame.time.Clock()
         self.running = True
+
         self.player = Player(self, 352, 500)
         self.enemies = pygame.sprite.Group()
-        
-        enemy_image = pygame.Surface((40, 40))
+
+        enemy_width = 40
+        enemy_height = 40
+
+        enemy_image = pygame.Surface((enemy_width, enemy_height))
         enemy_image.fill((255, 0, 0))
 
-        enemy = Enemy(self, enemy_image, 380, 100)
-        self.enemies.add(enemy)
+        formation_width = (
+            settings.ENEMY_COLUMNS * enemy_width
+            + (settings.ENEMY_COLUMNS - 1)
+            * settings.ENEMY_HORIZONTAL_SPACING
+        )
+
+        start_x = (settings.SCREEN_WIDTH - formation_width) // 2
+
+        for row in range(settings.ENEMY_ROWS):
+            for column in range(settings.ENEMY_COLUMNS):
+                x = start_x + column * (
+                    enemy_width + settings.ENEMY_HORIZONTAL_SPACING
+                )
+
+                y = 80 + row * (
+                    enemy_height + settings.ENEMY_VERTICAL_SPACING
+                )
+
+                enemy = Enemy(self, enemy_image, x, y)
+                self.enemies.add(enemy)
+
+        self.enemy_formation = EnemyFormation(self.enemies)
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -38,10 +64,9 @@ class Game:
                 if event.key == pygame.K_SPACE:
                     self.player.shoot()
 
-
     def update(self):
         self.player.update()
-        self.enemies.update()
+        self.enemy_formation.update()
 
     def draw(self):
         self.screen.fill(settings.BLACK)

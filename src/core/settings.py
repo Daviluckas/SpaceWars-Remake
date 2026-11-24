@@ -24,3 +24,9 @@ PROJECTILE_SPEED = 8
 # Configurações dos inimigos
 ENEMY_SPEED = 2
 ENEMY_DESCENT = 20
+
+# Configurações da formação de inimigos
+ENEMY_ROWS = 3
+ENEMY_COLUMNS = 5
+ENEMY_HORIZONTAL_SPACING = 30
+ENEMY_VERTICAL_SPACING = 25
