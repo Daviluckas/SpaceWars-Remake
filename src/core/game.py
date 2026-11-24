@@ -26,11 +26,17 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
 
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE:
+                    self.player.shoot()
+
+
     def update(self):
         self.player.update()
 
     def draw(self):
         self.screen.fill(settings.BLACK)
+        self.player.projectiles.draw(self.screen)
         self.screen.blit(self.player.image, self.player.rect)
         pygame.display.flip()
 

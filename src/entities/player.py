@@ -2,6 +2,7 @@ import pygame
 
 from src.core import settings
 from src.entities.entity import Entity
+from src.entities.projectile import Projectile
 
 
 class Player(Entity):
@@ -17,6 +18,8 @@ class Player(Entity):
         )
 
         super().__init__(game, image, x, y)
+
+        self.projectiles = pygame.sprite.Group()
 
 
     def update(self):
@@ -36,3 +39,14 @@ class Player(Entity):
 
         self.rect.clamp_ip(
             pygame.Rect(0, 0, settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
+        
+        self.projectiles.update()
+
+    def shoot(self):
+        projectile = Projectile(
+            self.game,
+            self.rect.centerx - settings.PROJECTILE_WIDTH // 2,
+            self.rect.top - settings.PROJECTILE_HEIGHT
+        )
+
+        self.projectiles.add(projectile)
