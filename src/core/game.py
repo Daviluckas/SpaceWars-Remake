@@ -2,11 +2,13 @@
 import pygame
 
 from src.core import settings
-
+from src.core.asset_manager import AssetManager
 
 class Game:
     def __init__(self):
         pygame.init()
+
+        self.assets = AssetManager()
 
         self.screen = pygame.display.set_mode(
             (settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT)
