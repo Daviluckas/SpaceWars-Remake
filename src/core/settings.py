@@ -31,6 +31,10 @@ ENEMY_COLUMNS = 5
 ENEMY_HORIZONTAL_SPACING = 30
 ENEMY_VERTICAL_SPACING = 25
 
+# Configurações de surgimento dos inimigos
+ENEMY_SPAWN_MIN_INTERVAL = 1500
+ENEMY_SPAWN_MAX_INTERVAL = 3000
+
 # Configurações de pontuação
 ENEMY_SCORE = 10
 

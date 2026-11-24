@@ -6,6 +6,7 @@ from src.core.asset_manager import AssetManager
 from src.entities.player import Player
 from src.entities.enemies.enemy import Enemy
 from src.systems.enemy_formation import EnemyFormation
+from src.systems.enemy_spawner import EnemySpawner
 from src.ui.hud import HUD
 
 class Game:
@@ -35,26 +36,11 @@ class Game:
         enemy_image = pygame.Surface((enemy_width, enemy_height))
         enemy_image.fill((255, 0, 0))
 
-        formation_width = (
-            settings.ENEMY_COLUMNS * enemy_width
-            + (settings.ENEMY_COLUMNS - 1)
-            * settings.ENEMY_HORIZONTAL_SPACING
+        self.enemy_spawner = EnemySpawner(
+            self,
+            self.enemies,
+            enemy_image
         )
-
-        start_x = (settings.SCREEN_WIDTH - formation_width) // 2
-
-        for row in range(settings.ENEMY_ROWS):
-            for column in range(settings.ENEMY_COLUMNS):
-                x = start_x + column * (
-                    enemy_width + settings.ENEMY_HORIZONTAL_SPACING
-                )
-
-                y = 80 + row * (
-                    enemy_height + settings.ENEMY_VERTICAL_SPACING
-                )
-
-                enemy = Enemy(self, enemy_image, x, y)
-                self.enemies.add(enemy)
 
         self.enemy_formation = EnemyFormation(self.enemies)
 
@@ -73,6 +59,7 @@ class Game:
             return
         
         self.player.update()
+        self.enemy_spawner.update()
         self.enemy_formation.update()
         self.handle_collisions()
 
