@@ -46,6 +46,10 @@ class Game:
             "chase": self.assets.load_image(
                 "enemy_perseguidor",
                 "sprites/enemies/perseguidor.png"
+            ),
+            "shooter": self.assets.load_image(
+                "enemy_atirador",
+                "sprites/enemies/atirador.png"
             )
         }
 
@@ -144,7 +148,9 @@ class Game:
             blindado_frames,
             zigue_zague_frames,
             veloz_frames,
-            perseguidor_frames
+            perseguidor_frames,
+            atirador_movement_frames,
+            atirador_shooting_frames
         )
 
         self.enemy_formation = EnemyFormation(self.enemies)
@@ -213,6 +219,40 @@ class Game:
             )
 
             perseguidor_frames[i] = pygame.transform.scale(
+                frame,
+                new_size
+            )
+
+
+        for i, frame in enumerate(atirador_movement_frames):
+            scale = min(
+                64 / frame.get_width(),
+                64 / frame.get_height()
+            )
+
+            new_size = (
+                round(frame.get_width() * scale),
+                round(frame.get_height() * scale)
+            )
+
+            atirador_movement_frames[i] = pygame.transform.scale(
+                frame,
+                new_size
+            )
+
+
+        for i, frame in enumerate(atirador_shooting_frames):
+            scale = min(
+                64 / frame.get_width(),
+                64 / frame.get_height()
+            )
+
+            new_size = (
+                round(frame.get_width() * scale),
+                round(frame.get_height() * scale)
+            )
+
+            atirador_shooting_frames[i] = pygame.transform.scale(
                 frame,
                 new_size
             )

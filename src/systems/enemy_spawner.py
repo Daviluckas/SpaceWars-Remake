@@ -11,7 +11,7 @@ from src.entities.enemies.behaviors.fast_behavior import FastBehavior
 
 
 class EnemySpawner:
-    def __init__(self, game, enemies, images, blindado_frames, zigue_zague_frames, veloz_frames, perseguidor_frames):
+    def __init__(self, game, enemies, images, blindado_frames, zigue_zague_frames, veloz_frames, perseguidor_frames, atirador_movement_frames, atirador_shooting_frames):
         self.game = game
         self.enemies = enemies
         self.images = images
@@ -19,6 +19,9 @@ class EnemySpawner:
         self.zigue_zague_frames = zigue_zague_frames
         self.veloz_frames = veloz_frames
         self.perseguidor_frames = perseguidor_frames 
+        self.atirador_movement_frames = atirador_movement_frames
+        self.atirador_shooting_frames = atirador_shooting_frames
+
 
         self.spawn_interval = random.randint(
             settings.ENEMY_SPAWN_MIN_INTERVAL,
@@ -51,15 +54,23 @@ class EnemySpawner:
         y = random.randint(50, 180)
 
         animation_frames = None
+        shooting_frames = None
 
         if behavior_name == "horizontal":
             animation_frames = self.blindado_frames
+
         elif behavior_name == "zigzag":
             animation_frames = self.zigue_zague_frames
+
         elif behavior_name == "fast":
             animation_frames = self.veloz_frames
+
         elif behavior_name == "chase":
             animation_frames = self.perseguidor_frames
+
+        elif behavior_name == "shooter":
+            animation_frames = self.atirador_movement_frames
+            shooting_frames = self.atirador_shooting_frames
 
 
         enemy = Enemy(
@@ -68,7 +79,8 @@ class EnemySpawner:
             x,
             y,
             behavior=behavior,
-            animation_frames=animation_frames
+            animation_frames=animation_frames,
+            shooting_frames=shooting_frames
         )
 
         self.enemies.add(enemy)
@@ -78,7 +90,8 @@ class EnemySpawner:
             "horizontal": HorizontalBehavior,
             "zigzag": ZigzagBehavior,
             "chase": ChaseBehavior,
-            "fast": FastBehavior
+            "fast": FastBehavior,
+            "shooter": lambda: HorizontalBehavior(3, 4)
         }
 
         behavior_name = random.choice(list(behaviors.keys()))
