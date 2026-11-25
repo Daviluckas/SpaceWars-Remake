@@ -28,7 +28,6 @@ class Game:
         self.score = 0
         self.hud = HUD(self)
 
-        self.player = Player(self, 352, 500)
         self.enemies = pygame.sprite.Group()
 
         enemy_images = {
@@ -86,6 +85,17 @@ class Game:
         ]
 
 
+        player_projectile_frames = [
+            self.assets.load_image(
+                f"player_projectile_{i}",
+                f"sprites/projectiles/player/tiro1/tiro_1_{i:02d}.png"
+            )
+            for i in range(1, 7)
+        ]
+
+        self.player = Player(self, 352, 500, player_projectile_frames)
+
+
         for name, image in enemy_images.items():
             scale = min(
                 64 / image.get_width(),
@@ -132,55 +142,55 @@ class Game:
             )
 
 
-            for i, frame in enumerate(zigue_zague_frames):
-                scale = min(
-                    64 / frame.get_width(),
-                    64 / frame.get_height()
-                )
+        for i, frame in enumerate(zigue_zague_frames):
+            scale = min(
+                64 / frame.get_width(),
+                64 / frame.get_height()
+            )
 
-                new_size = (
-                    round(frame.get_width() * scale),
-                    round(frame.get_height() * scale)
-                )
+            new_size = (
+                round(frame.get_width() * scale),
+                round(frame.get_height() * scale)
+            )
 
-                zigue_zague_frames[i] = pygame.transform.scale(
-                    frame,
-                    new_size
-                )
-
-
-                for i, frame in enumerate(veloz_frames):
-                    scale = min(
-                        64 / frame.get_width(),
-                        64 / frame.get_height()
-                    )
-
-                    new_size = (
-                        round(frame.get_width() * scale),
-                        round(frame.get_height() * scale)
-                    )
-
-                    veloz_frames[i] = pygame.transform.scale(
-                        frame,
-                        new_size
-                    )
+            zigue_zague_frames[i] = pygame.transform.scale(
+                frame,
+                new_size
+            )
 
 
-                    for i, frame in enumerate(perseguidor_frames):
-                        scale = min(
-                            64 / frame.get_width(),
-                            64 / frame.get_height()
-                        )
+        for i, frame in enumerate(veloz_frames):
+            scale = min(
+                64 / frame.get_width(),
+                64 / frame.get_height()
+            )
 
-                        new_size = (
-                            round(frame.get_width() * scale),
-                            round(frame.get_height() * scale)
-                        )
+            new_size = (
+                round(frame.get_width() * scale),
+                round(frame.get_height() * scale)
+            )
 
-                        perseguidor_frames[i] = pygame.transform.scale(
-                            frame,
-                            new_size
-                        )
+            veloz_frames[i] = pygame.transform.scale(
+                frame,
+                new_size
+            )
+
+
+        for i, frame in enumerate(perseguidor_frames):
+            scale = min(
+                64 / frame.get_width(),
+                64 / frame.get_height()
+            )
+
+            new_size = (
+                round(frame.get_width() * scale),
+                round(frame.get_height() * scale)
+            )
+
+            perseguidor_frames[i] = pygame.transform.scale(
+                frame,
+                new_size
+            )
 
 
     def handle_events(self):

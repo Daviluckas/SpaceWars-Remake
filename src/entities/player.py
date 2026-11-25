@@ -1,3 +1,4 @@
+
 import pygame
 
 from src.core import settings
@@ -6,7 +7,7 @@ from src.entities.projectile import Projectile
 
 
 class Player(Entity):
-    def __init__(self, game, x, y):
+    def __init__(self, game, x, y, projectile_frames):
         image = game.assets.load_image(
             "player",
             "sprites/player/player.png"
@@ -20,8 +21,8 @@ class Player(Entity):
         super().__init__(game, image, x, y)
 
         self.projectiles = pygame.sprite.Group()
+        self.projectile_frames = projectile_frames
         self.lives = settings.PLAYER_LIVES
-
 
     def update(self):
         keys = pygame.key.get_pressed()
@@ -39,19 +40,20 @@ class Player(Entity):
             self.rect.y += settings.PLAYER_SPEED
 
         self.rect.clamp_ip(
-            pygame.Rect(0, 0, settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
-        
+            pygame.Rect(0, 0, settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT)
+        )
+
         self.projectiles.update()
 
     def shoot(self):
         projectile = Projectile(
             self.game,
             self.rect.centerx - settings.PROJECTILE_WIDTH // 2,
-            self.rect.top - settings.PROJECTILE_HEIGHT
+            self.rect.top - settings.PROJECTILE_HEIGHT,
+            self.projectile_frames
         )
 
         self.projectiles.add(projectile)
-
 
     def take_damage(self):
         self.lives -= 1
