@@ -8,13 +8,13 @@ class EnemyProjectile(Entity):
     def __init__(self, game, x, y, animation_frames, target):
         image = pygame.transform.scale(
             animation_frames[0],
-            (20, 20)
+            (30, 30)
         )
 
         super().__init__(game, image, x, y)
 
         self.animation = Animation([
-            pygame.transform.scale(frame, (20, 20))
+            pygame.transform.scale(frame, (30, 30))
             for frame in animation_frames
         ])
 

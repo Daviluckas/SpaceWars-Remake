@@ -142,8 +142,8 @@ class Game:
 
         for name, image in enemy_images.items():
             scale = min(
-                64 / image.get_width(),
-                64 / image.get_height()
+                75 / image.get_width(),
+                75 / image.get_height()
             )
 
             new_size = (
@@ -174,8 +174,8 @@ class Game:
 
         for i, frame in enumerate(blindado_frames):
             scale = min(
-                64 / frame.get_width(),
-                64 / frame.get_height()
+                75 / frame.get_width(),
+                75 / frame.get_height()
             )
 
             new_size = (
@@ -191,8 +191,8 @@ class Game:
 
         for i, frame in enumerate(zigue_zague_frames):
             scale = min(
-                64 / frame.get_width(),
-                64 / frame.get_height()
+                75 / frame.get_width(),
+                75 / frame.get_height()
             )
 
             new_size = (
@@ -208,8 +208,8 @@ class Game:
 
         for i, frame in enumerate(veloz_frames):
             scale = min(
-                64 / frame.get_width(),
-                64 / frame.get_height()
+                75 / frame.get_width(),
+                75 / frame.get_height()
             )
 
             new_size = (
@@ -225,8 +225,8 @@ class Game:
 
         for i, frame in enumerate(perseguidor_frames):
             scale = min(
-                64 / frame.get_width(),
-                64 / frame.get_height()
+                75 / frame.get_width(),
+                75 / frame.get_height()
             )
 
             new_size = (
@@ -242,8 +242,8 @@ class Game:
 
         for i, frame in enumerate(atirador_movement_frames):
             scale = min(
-                64 / frame.get_width(),
-                64 / frame.get_height()
+                75 / frame.get_width(),
+                75 / frame.get_height()
             )
 
             new_size = (
@@ -259,8 +259,8 @@ class Game:
 
         for i, frame in enumerate(atirador_shooting_frames):
             scale = min(
-                64 / frame.get_width(),
-                64 / frame.get_height()
+                75 / frame.get_width(),
+                75 / frame.get_height()
             )
 
             new_size = (
