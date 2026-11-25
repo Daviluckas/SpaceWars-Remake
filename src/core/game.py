@@ -9,6 +9,7 @@ from src.systems.enemy_formation import EnemyFormation
 from src.systems.enemy_spawner import EnemySpawner
 from src.ui.hud import HUD
 
+
 class Game:
     def __init__(self):
         pygame.init()
@@ -30,16 +31,45 @@ class Game:
         self.player = Player(self, 352, 500)
         self.enemies = pygame.sprite.Group()
 
-        enemy_width = 40
-        enemy_height = 40
+        enemy_images = {
+            "horizontal": self.assets.load_image(
+                "enemy_blindado",
+                "sprites/enemies/blindado.png"
+            ),
+            "zigzag": self.assets.load_image(
+                "enemy_zigue_zague",
+                "sprites/enemies/zigue_zague.png"
+            ),
+            "fast": self.assets.load_image(
+                "enemy_veloz",
+                "sprites/enemies/veloz.png"
+            ),
+            "chase": self.assets.load_image(
+                "enemy_perseguidor",
+                "sprites/enemies/perseguidor.png"
+            )
+        }
 
-        enemy_image = pygame.Surface((enemy_width, enemy_height))
-        enemy_image.fill((255, 0, 0))
+        for name, image in enemy_images.items():
+            scale = min(
+                64 / image.get_width(),
+                64 / image.get_height()
+            )
+
+            new_size = (
+                round(image.get_width() * scale),
+                round(image.get_height() * scale)
+            )
+
+            enemy_images[name] = pygame.transform.scale(
+                image,
+                new_size
+            )
 
         self.enemy_spawner = EnemySpawner(
             self,
             self.enemies,
-            enemy_image
+            enemy_images
         )
 
         self.enemy_formation = EnemyFormation(self.enemies)
@@ -54,10 +84,9 @@ class Game:
                     self.player.shoot()
 
     def update(self):
-
         if self.game_over:
             return
-        
+
         self.player.update()
         self.enemy_spawner.update()
         self.enemies.update()
@@ -65,7 +94,6 @@ class Game:
 
         if self.player.lives <= 0:
             self.game_over = True
-
 
     def handle_collisions(self):
         collisions = pygame.sprite.groupcollide(
@@ -89,7 +117,6 @@ class Game:
         if player_collision:
             self.player.take_damage()
 
-
     def draw(self):
         self.screen.fill(settings.BLACK)
         self.enemies.draw(self.screen)
@@ -101,7 +128,6 @@ class Game:
             self.draw_game_over()
 
         pygame.display.flip()
-
 
     def draw_game_over(self):
         font = pygame.font.Font(None, 72)
@@ -120,7 +146,6 @@ class Game:
         )
 
         self.screen.blit(game_over_text, text_rect)
-
 
     def run(self):
         while self.running:
