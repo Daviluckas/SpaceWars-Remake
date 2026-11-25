@@ -4,11 +4,11 @@ from src.entities.enemies.behaviors.horizontal_behavior import HorizontalBehavio
 
 
 class Enemy(Entity):
-    def __init__(self, game, image, x, y, health=1):
+    def __init__(self, game, image, x, y, health=1, behavior=None):
         super().__init__(game, image, x, y)
 
         self.health = health
-        self.behavior = HorizontalBehavior()
+        self.behavior = behavior if behavior is not None else HorizontalBehavior()
 
     def update(self):
         self.behavior.update(self)

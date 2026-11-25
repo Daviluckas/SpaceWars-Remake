@@ -4,6 +4,8 @@ import pygame
 
 from src.core import settings
 from src.entities.enemies.enemy import Enemy
+from src.entities.enemies.behaviors.horizontal_behavior import HorizontalBehavior
+from src.entities.enemies.behaviors.zigzag_behavior import ZigzagBehavior
 
 
 class EnemySpawner:
@@ -40,5 +42,18 @@ class EnemySpawner:
 
         y = random.randint(50, 180)
 
-        enemy = Enemy(self.game, self.image, x, y)
+        behavior = self.choose_behavior()
+
+        enemy = Enemy(self.game, self.image, x, y, behavior=behavior)
         self.enemies.add(enemy)
+
+
+    def choose_behavior(self):
+        behaviors = [
+            HorizontalBehavior,
+            ZigzagBehavior
+        ]
+
+        behavior_class = random.choice(behaviors)
+
+        return behavior_class()
