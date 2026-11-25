@@ -11,6 +11,7 @@ class ZigzagBehavior(BaseBehavior):
         self.speed = random.randint(2, 4)
         self.vertical_direction = 1
         self.vertical_speed = random.randint(1, 3)
+        self.approach_speed = 0.5
         self.change_direction_timer = 0
         self.change_direction_interval = random.randint(20, 45)
 
@@ -31,3 +32,5 @@ class ZigzagBehavior(BaseBehavior):
         elif enemy.rect.left <= 0:
             enemy.rect.left = 0
             self.direction = 1
+
+        self.approach_player(enemy, self.approach_speed)

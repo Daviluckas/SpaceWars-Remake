@@ -9,6 +9,7 @@ class HorizontalBehavior(BaseBehavior):
     def __init__(self):
         self.direction = random.choice([-1, 1])
         self.speed = random.randint(1, 4)
+        self.approach_speed = 0.5
 
     def update(self, enemy):
         enemy.rect.x += self.speed * self.direction
@@ -16,9 +17,9 @@ class HorizontalBehavior(BaseBehavior):
         if enemy.rect.right >= settings.SCREEN_WIDTH:
             enemy.rect.right = settings.SCREEN_WIDTH
             self.direction = -1
-            enemy.rect.y += settings.ENEMY_DESCENT
 
         elif enemy.rect.left <= 0:
             enemy.rect.left = 0
             self.direction = 1
-            enemy.rect.y += settings.ENEMY_DESCENT
+
+        self.approach_player(enemy, self.approach_speed)
