@@ -96,6 +96,31 @@ class Game:
         self.player = Player(self, 352, 500, player_projectile_frames)
 
 
+        atirador_movement_frames = [
+            self.assets.load_image(
+                f"atirador_andar_{i}",
+                f"sprites/enemies/atirador/andar/atirador_andar_{i:02d}.png"
+            )
+            for i in range(1, 7)
+        ]
+
+        atirador_shooting_frames = [
+            self.assets.load_image(
+                f"atirador_atirar_{i}",
+                f"sprites/enemies/atirador/atirar/atirador_atirar_{i:02d}.png"
+            )
+            for i in range(1, 7)
+        ]
+
+        atirador_projectile_frames = [
+            self.assets.load_image(
+                f"atirador_projectile_{i}",
+                f"sprites/projectiles/enemy/tiro_atirador/tiro_atirador_{i:02d}.png"
+            )
+            for i in range(1, 5)
+        ]
+
+
         for name, image in enemy_images.items():
             scale = min(
                 64 / image.get_width(),
