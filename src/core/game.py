@@ -8,6 +8,7 @@ from src.entities.enemies.enemy import Enemy
 from src.systems.enemy_formation import EnemyFormation
 from src.systems.enemy_spawner import EnemySpawner
 from src.ui.hud import HUD
+from src.systems.background import Background
 
 
 class Game:
@@ -19,6 +20,19 @@ class Game:
         self.screen = pygame.display.set_mode(
             (settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT)
         )
+
+        background_image = self.assets.load_image(
+            "background_space",
+            "sprites/backgrounds/background_space.png"
+        )
+
+        self.background = Background(
+            background_image,
+            settings.SCREEN_WIDTH,
+            settings.SCREEN_HEIGHT,
+            speed=1
+        )
+
 
         pygame.display.set_caption(settings.SCREEN_TITLE)
 
@@ -273,6 +287,7 @@ class Game:
         if self.game_over:
             return
 
+        self.background.update()
         self.player.update()
         self.enemy_spawner.update()
         self.enemies.update()
@@ -315,7 +330,7 @@ class Game:
             self.player.take_damage()
 
     def draw(self):
-        self.screen.fill(settings.BLACK)
+        self.background.draw(self.screen)
         self.enemies.draw(self.screen)
         self.enemy_projectiles.draw(self.screen)
         self.player.projectiles.draw(self.screen)
