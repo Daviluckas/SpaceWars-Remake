@@ -59,6 +59,15 @@ class Game:
         ]
 
 
+        zigue_zague_frames = [
+            self.assets.load_image(
+                f"zigue_zague_{i}",
+                f"sprites/enemies/zigue_zague/zigue_zague_{i:02d}.png"
+            )
+            for i in range(1, 7)
+        ]
+
+
         for name, image in enemy_images.items():
             scale = min(
                 64 / image.get_width(),
@@ -79,7 +88,8 @@ class Game:
             self,
             self.enemies,
             enemy_images,
-            blindado_frames
+            blindado_frames,
+            zigue_zague_frames
         )
 
         self.enemy_formation = EnemyFormation(self.enemies)
@@ -100,6 +110,23 @@ class Game:
                 frame,
                 new_size
             )
+
+
+            for i, frame in enumerate(zigue_zague_frames):
+                scale = min(
+                    64 / frame.get_width(),
+                    64 / frame.get_height()
+                )
+
+                new_size = (
+                    round(frame.get_width() * scale),
+                    round(frame.get_height() * scale)
+                )
+
+                zigue_zague_frames[i] = pygame.transform.scale(
+                    frame,
+                    new_size
+                )
 
 
     def handle_events(self):

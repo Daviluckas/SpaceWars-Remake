@@ -11,11 +11,12 @@ from src.entities.enemies.behaviors.fast_behavior import FastBehavior
 
 
 class EnemySpawner:
-    def __init__(self, game, enemies, images, blindado_frames):
+    def __init__(self, game, enemies, images, blindado_frames, zigue_zague_frames):
         self.game = game
         self.enemies = enemies
         self.images = images
         self.blindado_frames = blindado_frames
+        self.zigue_zague_frames = zigue_zague_frames
 
         self.spawn_interval = random.randint(
             settings.ENEMY_SPAWN_MIN_INTERVAL,
@@ -47,11 +48,13 @@ class EnemySpawner:
 
         y = random.randint(50, 180)
 
-        animation_frames = (
-            self.blindado_frames
-            if behavior_name == "horizontal"
-            else None
-        )
+        animation_frames = None
+        
+        if behavior_name == "horizontal":
+            animation_frames = self.blindado_frames
+        elif behavior_name == "zigzag":
+            animation_frames = self.zigue_zague_frames
+
 
         enemy = Enemy(
             self.game,
