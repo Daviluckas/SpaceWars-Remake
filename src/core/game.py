@@ -50,6 +50,15 @@ class Game:
             )
         }
 
+        blindado_frames = [
+            self.assets.load_image(
+                f"blindado_{i}",
+                f"sprites/enemies/blindado/blindado_{i:02d}.png"
+            )
+            for i in range(1, 7)
+        ]
+
+
         for name, image in enemy_images.items():
             scale = min(
                 64 / image.get_width(),
@@ -69,10 +78,29 @@ class Game:
         self.enemy_spawner = EnemySpawner(
             self,
             self.enemies,
-            enemy_images
+            enemy_images,
+            blindado_frames
         )
 
         self.enemy_formation = EnemyFormation(self.enemies)
+
+
+        for i, frame in enumerate(blindado_frames):
+            scale = min(
+                64 / frame.get_width(),
+                64 / frame.get_height()
+            )
+
+            new_size = (
+                round(frame.get_width() * scale),
+                round(frame.get_height() * scale)
+            )
+
+            blindado_frames[i] = pygame.transform.scale(
+                frame,
+                new_size
+            )
+
 
     def handle_events(self):
         for event in pygame.event.get():

@@ -11,10 +11,11 @@ from src.entities.enemies.behaviors.fast_behavior import FastBehavior
 
 
 class EnemySpawner:
-    def __init__(self, game, enemies, images):
+    def __init__(self, game, enemies, images, blindado_frames):
         self.game = game
         self.enemies = enemies
         self.images = images
+        self.blindado_frames = blindado_frames
 
         self.spawn_interval = random.randint(
             settings.ENEMY_SPAWN_MIN_INTERVAL,
@@ -37,7 +38,7 @@ class EnemySpawner:
             )
 
     def spawn_enemy(self):
-        behavior, image = self.choose_behavior()
+        behavior, image, behavior_name = self.choose_behavior()
 
         x = random.randint(
             0,
@@ -46,12 +47,19 @@ class EnemySpawner:
 
         y = random.randint(50, 180)
 
+        animation_frames = (
+            self.blindado_frames
+            if behavior_name == "horizontal"
+            else None
+        )
+
         enemy = Enemy(
             self.game,
             image,
             x,
             y,
-            behavior=behavior
+            behavior=behavior,
+            animation_frames=animation_frames
         )
 
         self.enemies.add(enemy)
@@ -69,4 +77,4 @@ class EnemySpawner:
         behavior = behaviors[behavior_name]()
         image = self.images[behavior_name]
 
-        return behavior, image
+        return behavior, image, behavior_name
