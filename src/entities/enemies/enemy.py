@@ -1,8 +1,6 @@
 
-import random
-
-from src.core import settings
 from src.entities.entity import Entity
+from src.entities.enemies.behaviors.horizontal_behavior import HorizontalBehavior
 
 
 class Enemy(Entity):
@@ -10,21 +8,10 @@ class Enemy(Entity):
         super().__init__(game, image, x, y)
 
         self.health = health
-        self.direction = random.choice([-1, 1])
-        self.speed = random.randint(1, 4)
+        self.behavior = HorizontalBehavior()
 
     def update(self):
-        self.rect.x += self.speed * self.direction
-
-        if self.rect.right >= settings.SCREEN_WIDTH:
-            self.rect.right = settings.SCREEN_WIDTH
-            self.direction = -1
-            self.rect.y += settings.ENEMY_DESCENT
-
-        elif self.rect.left <= 0:
-            self.rect.left = 0
-            self.direction = 1
-            self.rect.y += settings.ENEMY_DESCENT
+        self.behavior.update(self)
 
     def take_damage(self, damage=1):
         self.health -= damage
