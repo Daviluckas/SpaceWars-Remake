@@ -29,6 +29,7 @@ class Game:
         self.hud = HUD(self)
 
         self.enemies = pygame.sprite.Group()
+        self.enemy_projectiles = pygame.sprite.Group()
 
         enemy_images = {
             "horizontal": self.assets.load_image(
@@ -150,7 +151,8 @@ class Game:
             veloz_frames,
             perseguidor_frames,
             atirador_movement_frames,
-            atirador_shooting_frames
+            atirador_shooting_frames,
+            atirador_projectile_frames
         )
 
         self.enemy_formation = EnemyFormation(self.enemies)
@@ -274,6 +276,7 @@ class Game:
         self.player.update()
         self.enemy_spawner.update()
         self.enemies.update()
+        self.enemy_projectiles.update()
         self.handle_collisions()
 
         if self.player.lives <= 0:
@@ -301,9 +304,20 @@ class Game:
         if player_collision:
             self.player.take_damage()
 
+
+        projectile_collision = pygame.sprite.spritecollide(
+            self.player,
+            self.enemy_projectiles,
+            True
+        )
+
+        if projectile_collision:
+            self.player.take_damage()
+
     def draw(self):
         self.screen.fill(settings.BLACK)
         self.enemies.draw(self.screen)
+        self.enemy_projectiles.draw(self.screen)
         self.player.projectiles.draw(self.screen)
         self.screen.blit(self.player.image, self.player.rect)
         self.hud.draw()
