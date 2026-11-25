@@ -7,6 +7,7 @@ from src.entities.enemies.enemy import Enemy
 from src.entities.enemies.behaviors.horizontal_behavior import HorizontalBehavior
 from src.entities.enemies.behaviors.zigzag_behavior import ZigzagBehavior
 from src.entities.enemies.behaviors.chase_behavior import ChaseBehavior
+from src.entities.enemies.behaviors.fast_behavior import FastBehavior
 
 
 class EnemySpawner:
@@ -53,7 +54,8 @@ class EnemySpawner:
         behaviors = [
             HorizontalBehavior,
             ZigzagBehavior,
-            ChaseBehavior
+            ChaseBehavior,
+            FastBehavior
         ]
 
         behavior_class = random.choice(behaviors)
