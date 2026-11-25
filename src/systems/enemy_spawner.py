@@ -11,13 +11,14 @@ from src.entities.enemies.behaviors.fast_behavior import FastBehavior
 
 
 class EnemySpawner:
-    def __init__(self, game, enemies, images, blindado_frames, zigue_zague_frames, veloz_frames):
+    def __init__(self, game, enemies, images, blindado_frames, zigue_zague_frames, veloz_frames, perseguidor_frames):
         self.game = game
         self.enemies = enemies
         self.images = images
         self.blindado_frames = blindado_frames
         self.zigue_zague_frames = zigue_zague_frames
         self.veloz_frames = veloz_frames
+        self.perseguidor_frames = perseguidor_frames 
 
         self.spawn_interval = random.randint(
             settings.ENEMY_SPAWN_MIN_INTERVAL,
@@ -57,6 +58,8 @@ class EnemySpawner:
             animation_frames = self.zigue_zague_frames
         elif behavior_name == "fast":
             animation_frames = self.veloz_frames
+        elif behavior_name == "chase":
+            animation_frames = self.perseguidor_frames
 
 
         enemy = Enemy(
