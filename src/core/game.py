@@ -60,7 +60,7 @@ class Game:
         
         self.player.update()
         self.enemy_spawner.update()
-        self.enemy_formation.update()
+        self.enemies.update()
         self.handle_collisions()
 
         if self.player.lives <= 0:
