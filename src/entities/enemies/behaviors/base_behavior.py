@@ -8,15 +8,22 @@ class BaseBehavior:
     def approach_player(self, enemy, speed):
         player = enemy.game.player
 
-        if enemy.rect.centery < player.rect.centery:
-            distance = player.rect.centery - enemy.rect.centery
+        distance = player.rect.centery - enemy.rect.centery
 
-            self.approach_remainder = (
-                getattr(self, "approach_remainder", 0) + speed
-            )
+        if distance == 0:
+            return
 
-            movement = int(self.approach_remainder)
-            movement = min(movement, distance)
+        direction = 1 if distance > 0 else -1
 
-            enemy.rect.y += movement
-            self.approach_remainder -= movement
+        remainder = getattr(self, "approach_remainder", 0)
+
+        if remainder * direction < 0:
+            remainder = 0
+
+        remainder += speed
+
+        movement = min(int(remainder), abs(distance))
+
+        enemy.rect.y += movement * direction
+
+        self.approach_remainder = remainder - movement
