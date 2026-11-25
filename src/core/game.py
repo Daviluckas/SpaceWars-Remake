@@ -9,6 +9,7 @@ from src.systems.enemy_formation import EnemyFormation
 from src.systems.enemy_spawner import EnemySpawner
 from src.ui.hud import HUD
 from src.systems.background import Background
+from src.entities.explosion import Explosion
 
 
 class Game:
@@ -45,6 +46,7 @@ class Game:
         self.enemies = pygame.sprite.Group()
         self.enemy_projectiles = pygame.sprite.Group()
         self.explosions = pygame.sprite.Group()
+        self.player_explosion = None
 
         enemy_images = {
             "horizontal": self.assets.load_image(
@@ -305,6 +307,14 @@ class Game:
         if self.game_over:
             return
 
+        if self.player.destroyed:
+            self.explosions.update()
+
+            if self.player_explosion is not None and not self.player_explosion.alive():
+                self.game_over = True
+
+            return
+
         self.background.update()
         self.player.update()
         self.enemy_spawner.update()
@@ -313,8 +323,14 @@ class Game:
         self.explosions.update()
         self.handle_collisions()
 
-        if self.player.lives <= 0:
-            self.game_over = True
+        if self.player.destroyed and self.player_explosion is None:
+            self.player_explosion = Explosion(
+                self.explosion_frames,
+                self.player.rect.centerx,
+                self.player.rect.centery
+            )
+
+            self.explosions.add(self.player_explosion)
 
     def handle_collisions(self):
         collisions = pygame.sprite.groupcollide(
@@ -358,23 +374,25 @@ class Game:
         self.explosions.draw(self.screen)
         self.player.projectiles.draw(self.screen)
 
-        if self.player.thruster_image:
-            thruster = pygame.transform.scale(
-                self.player.thruster_image,
-                (18, 34)
-            )
+        if not self.player.destroyed:
+            if self.player.thruster_image:
+                thruster = pygame.transform.scale(
+                    self.player.thruster_image,
+                    (18, 34)
+                )
 
-            self.screen.blit(
-                thruster,
-                (self.player.rect.left + int(self.player.rect.width * 0.35) - 5, self.player.rect.bottom - 12)
-            )
+                self.screen.blit(
+                    thruster,
+                    (self.player.rect.left + int(self.player.rect.width * 0.35) - 5, self.player.rect.bottom - 12)
+                )
 
-            self.screen.blit(
-                thruster,
-                (self.player.rect.left + int(self.player.rect.width * 0.65) - 11, self.player.rect.bottom - 12)
-            )
+                self.screen.blit(
+                    thruster,
+                    (self.player.rect.left + int(self.player.rect.width * 0.65) - 11, self.player.rect.bottom - 12)
+                )
 
-        self.screen.blit(self.player.image, self.player.rect)
+            self.screen.blit(self.player.image, self.player.rect)
+
         self.hud.draw()
 
         if self.game_over:

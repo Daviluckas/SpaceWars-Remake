@@ -24,6 +24,7 @@ class Player(Entity):
         self.projectiles = pygame.sprite.Group()
         self.projectile_frames = projectile_frames
         self.lives = settings.PLAYER_LIVES
+        self.destroyed = False
 
         self.thruster_animation = Animation(
             thruster_frames,
@@ -34,6 +35,10 @@ class Player(Entity):
 
 
     def update(self):
+
+        if self.destroyed:
+            return
+        
         keys = pygame.key.get_pressed()
         previous_position = self.rect.topleft
 
@@ -76,3 +81,6 @@ class Player(Entity):
 
     def take_damage(self):
         self.lives -= 1
+
+        if self.lives <= 0:
+            self.destroyed = True
