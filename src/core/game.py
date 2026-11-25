@@ -112,7 +112,15 @@ class Game:
             for i in range(1, 7)
         ]
 
-        self.player = Player(self, 352, 500, player_projectile_frames)
+        player_thruster_frames = [
+            self.assets.load_image(
+                f"player_thruster_{i}",
+                f"sprites/player/thrusters/thruster_{i:02d}.png"
+            )
+            for i in range(1, 7)
+        ]
+
+        self.player = Player(self, 352, 500, player_projectile_frames, player_thruster_frames)
 
 
         atirador_movement_frames = [
@@ -334,6 +342,23 @@ class Game:
         self.enemies.draw(self.screen)
         self.enemy_projectiles.draw(self.screen)
         self.player.projectiles.draw(self.screen)
+
+        if self.player.thruster_image:
+            thruster = pygame.transform.scale(
+                self.player.thruster_image,
+                (18, 34)
+            )
+
+            self.screen.blit(
+                thruster,
+                (self.player.rect.left + int(self.player.rect.width * 0.35) - 5, self.player.rect.bottom - 12)
+            )
+
+            self.screen.blit(
+                thruster,
+                (self.player.rect.left + int(self.player.rect.width * 0.65) - 11, self.player.rect.bottom - 12)
+            )
+
         self.screen.blit(self.player.image, self.player.rect)
         self.hud.draw()
 

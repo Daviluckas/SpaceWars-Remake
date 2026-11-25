@@ -4,10 +4,11 @@ import pygame
 from src.core import settings
 from src.entities.entity import Entity
 from src.entities.projectile import Projectile
+from src.systems.animation import Animation
 
 
 class Player(Entity):
-    def __init__(self, game, x, y, projectile_frames):
+    def __init__(self, game, x, y, projectile_frames, thruster_frames):
         image = game.assets.load_image(
             "player",
             "sprites/player/player.png"
@@ -24,8 +25,17 @@ class Player(Entity):
         self.projectile_frames = projectile_frames
         self.lives = settings.PLAYER_LIVES
 
+        self.thruster_animation = Animation(
+            thruster_frames,
+            frame_duration=80
+        )
+
+        self.is_moving = False
+
+
     def update(self):
         keys = pygame.key.get_pressed()
+        previous_position = self.rect.topleft
 
         if keys[pygame.K_LEFT] or keys[pygame.K_a]:
             self.rect.x -= settings.PLAYER_SPEED
@@ -43,7 +53,16 @@ class Player(Entity):
             pygame.Rect(0, 0, settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT)
         )
 
+        self.is_moving = self.rect.topleft != previous_position
+
+        if self.is_moving:
+            self.thruster_image = self.thruster_animation.update()
+        else:
+            self.thruster_image = None
+            self.thruster_animation.current_frame = 0
+
         self.projectiles.update()
+
 
     def shoot(self):
         projectile = Projectile(
