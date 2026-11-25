@@ -6,9 +6,9 @@ from src.entities.enemies.behaviors.base_behavior import BaseBehavior
 
 
 class HorizontalBehavior(BaseBehavior):
-    def __init__(self):
+    def __init__(self, min_speed=1, max_speed=4):
         self.direction = random.choice([-1, 1])
-        self.speed = random.randint(1, 4)
+        self.speed = random.randint(min_speed, max_speed)
         self.approach_speed = 0.5
 
     def update(self, enemy):
