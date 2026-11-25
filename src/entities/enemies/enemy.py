@@ -5,6 +5,7 @@ from src.entities.entity import Entity
 from src.entities.enemies.behaviors.horizontal_behavior import HorizontalBehavior
 from src.systems.animation import Animation
 from src.entities.enemy_projectile import EnemyProjectile
+from src.entities.explosion import Explosion
 
 
 class Enemy(Entity):
@@ -97,7 +98,15 @@ class Enemy(Entity):
         self.health -= damage
 
         if self.health <= 0:
+            explosion = Explosion(
+                self.game.explosion_frames,
+                self.rect.centerx,
+                self.rect.centery
+            )
+
+            self.game.explosions.add(explosion)
             self.kill()
+
             return True
 
         return False

@@ -44,6 +44,7 @@ class Game:
 
         self.enemies = pygame.sprite.Group()
         self.enemy_projectiles = pygame.sprite.Group()
+        self.explosions = pygame.sprite.Group()
 
         enemy_images = {
             "horizontal": self.assets.load_image(
@@ -116,6 +117,15 @@ class Game:
             self.assets.load_image(
                 f"player_thruster_{i}",
                 f"sprites/player/thrusters/thruster_{i:02d}.png"
+            )
+            for i in range(1, 7)
+        ]
+
+
+        self.explosion_frames = [
+            self.assets.load_image(
+                f"explosion_{i}",
+                f"sprites/effects/explosions/explosion_{i:02d}.png"
             )
             for i in range(1, 7)
         ]
@@ -300,6 +310,7 @@ class Game:
         self.enemy_spawner.update()
         self.enemies.update()
         self.enemy_projectiles.update()
+        self.explosions.update()
         self.handle_collisions()
 
         if self.player.lives <= 0:
@@ -321,10 +332,13 @@ class Game:
         player_collision = pygame.sprite.spritecollide(
             self.player,
             self.enemies,
-            True
+            False
         )
 
         if player_collision:
+            for enemy in player_collision:
+                enemy.take_damage(enemy.health)
+
             self.player.take_damage()
 
 
@@ -341,6 +355,7 @@ class Game:
         self.background.draw(self.screen)
         self.enemies.draw(self.screen)
         self.enemy_projectiles.draw(self.screen)
+        self.explosions.draw(self.screen)
         self.player.projectiles.draw(self.screen)
 
         if self.player.thruster_image:
