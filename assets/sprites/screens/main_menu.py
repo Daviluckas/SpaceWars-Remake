@@ -2,9 +2,12 @@
 from pathlib import Path
 
 import pygame
+from pygame import event
 
 from src.core import settings
 from src.systems.video_background import VideoBackground
+from src.core.asset_manager import AssetManager
+from src.systems.menu_button import MenuButton
 
 
 ASSETS_DIR = Path(__file__).resolve().parents[3] / "assets"
@@ -27,8 +30,16 @@ class MainMenu:
             settings.SCREEN_HEIGHT
         )
 
+        self.assets = AssetManager()
+        self.load_buttons()
+        self.create_buttons()
+
     def handle_events(self):
         for event in pygame.event.get():
+            for button in self.buttons.values():
+                button.handle_event(event)
+
+                
             if event.type == pygame.QUIT:
                 self.running = False
 
@@ -36,11 +47,97 @@ class MainMenu:
                 if event.key == pygame.K_ESCAPE:
                     self.running = False
 
+
+    def load_buttons(self):
+        buttons_path = "sprites/menu/buttons"
+
+        self.buttons_images = {
+            "jogar": {
+                "normal": self.assets.load_image(
+                    "btn_jogar_normal",
+                    f"{buttons_path}/jogar/btn_jogar_normal.png"
+                ),
+                "hover": self.assets.load_image(
+                    "btn_jogar_hover",
+                    f"{buttons_path}/jogar/btn_jogar_hover.png"
+                ),
+                "pressed": self.assets.load_image(
+                    "btn_jogar_pressed",
+                    f"{buttons_path}/jogar/btn_jogar_pressed.png"
+                )
+            },
+            "opcoes": {
+                "normal": self.assets.load_image(
+                    "btn_opcoes_normal",
+                    f"{buttons_path}/opcoes/btn_opcoes_normal.png"
+                ),
+                "hover": self.assets.load_image(
+                    "btn_opcoes_hover",
+                    f"{buttons_path}/opcoes/btn_opcoes_hover.png"
+                ),
+                "pressed": self.assets.load_image(
+                    "btn_opcoes_pressed",
+                    f"{buttons_path}/opcoes/btn_opcoes_pressed.png"
+                )
+            },
+            "sobre": {
+                "normal": self.assets.load_image(
+                    "btn_sobre_normal",
+                    f"{buttons_path}/sobre/btn_sobre_normal.png"
+                ),
+                "hover": self.assets.load_image(
+                    "btn_sobre_hover",
+                    f"{buttons_path}/sobre/btn_sobre_hover.png"
+                ),
+                "pressed": self.assets.load_image(
+                    "btn_sobre_pressed",
+                    f"{buttons_path}/sobre/btn_sobre_pressed.png"
+                )
+            }
+        }
+
+
+    def create_buttons(self):
+            button_x = 80
+    
+            self.buttons = {
+                "jogar": MenuButton(
+                    self.buttons_images["jogar"]["normal"],
+                    self.buttons_images["jogar"]["hover"],
+                    self.buttons_images["jogar"]["pressed"],
+                    button_x,
+                    330
+                ),
+                "opcoes": MenuButton(
+                    self.buttons_images["opcoes"]["normal"],
+                    self.buttons_images["opcoes"]["hover"],
+                    self.buttons_images["opcoes"]["pressed"],
+                    button_x,
+                    410
+                ),
+                "sobre": MenuButton(
+                    self.buttons_images["sobre"]["normal"],
+                    self.buttons_images["sobre"]["hover"],
+                    self.buttons_images["sobre"]["pressed"],
+                    button_x,
+                    490
+                )
+            }
+
+
     def update(self):
         self.background.update()
 
+        for button in self.buttons.values():
+            button.update()
+
+
     def draw(self):
         self.background.draw(self.screen)
+
+        for button in self.buttons.values():
+            button.draw(self.screen)
+
         pygame.display.flip()
 
     def run(self):
