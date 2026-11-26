@@ -68,9 +68,20 @@ class Enemy(Entity):
         self.game.enemy_projectiles.add(projectile)
 
     def update(self):
+        self.speed_multiplier = (
+            self.game.difficulty_config["enemy_speed_multiplier"]
+            * self.game.get_difficulty_multiplier()
+        )
+
         self.behavior.update(self)
 
         current_time = pygame.time.get_ticks()
+        
+        self.projectile_interval = int(
+            2500
+            * self.game.difficulty_config["projectile_interval_multiplier"]
+            / self.game.get_difficulty_multiplier()
+        )
 
         if (
             self.shooting_frames

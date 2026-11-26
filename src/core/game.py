@@ -43,6 +43,9 @@ class Game:
         self.running = True
         self.game_over = False
         self.score = 0
+        self.start_time = pygame.time.get_ticks()
+        self.difficulty_level = 0
+        self.max_difficulty_level = 5
         self.selected_difficulty = selected_difficulty
 
         self.difficulty_config = DIFFICULTY_CONFIG[
@@ -316,6 +319,15 @@ class Game:
         if self.game_over:
             return
 
+        current_time = pygame.time.get_ticks()
+        elapsed_time = current_time - self.start_time
+
+        if (
+            elapsed_time >= (self.difficulty_level + 1) * 60000
+            and self.difficulty_level < self.max_difficulty_level
+        ):
+            self.difficulty_level += 1
+
         if self.player.destroyed:
             self.explosions.update()
 
@@ -340,6 +352,11 @@ class Game:
             )
 
             self.explosions.add(self.player_explosion)
+            
+
+    def get_difficulty_multiplier(self):
+        return 1 + (self.difficulty_level * 0.1)
+    
 
     def handle_collisions(self):
         collisions = pygame.sprite.groupcollide(

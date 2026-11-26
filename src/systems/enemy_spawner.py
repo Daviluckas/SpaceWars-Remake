@@ -40,7 +40,7 @@ class EnemySpawner:
     def update(self):
         current_time = pygame.time.get_ticks()
 
-        if current_time - self.last_spawn_time >= self.spawn_interval:
+        if (current_time - self.last_spawn_time>= self.spawn_interval / self.game.get_difficulty_multiplier()):
             self.spawn_enemy()
 
             self.last_spawn_time = current_time
