@@ -11,7 +11,7 @@ ASSETS_DIR = Path(__file__).resolve().parents[2] / "assets"
 
 
 class DifficultySelection:
-    def __init__(self):
+    def __init__(self, selected_difficulty="medium"):
         self.screen = pygame.display.get_surface()
         self.clock = pygame.time.Clock()
         self.running = True
@@ -25,7 +25,7 @@ class DifficultySelection:
         self.create_buttons()
 
 
-        self.selected_difficulty = "easy"
+        self.selected_difficulty = selected_difficulty
         self.background_index = 0
 
         self.frame_duration = 150

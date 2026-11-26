@@ -25,6 +25,7 @@ class MainMenu:
 
         self.clock = pygame.time.Clock()
         self.running = True
+        self.selected_difficulty = "medium"
 
         self.background = VideoBackground(
             str(ASSETS_DIR / "videos" / "menu" / "background_menu.mp4"),
@@ -49,8 +50,13 @@ class MainMenu:
             for name, button in self.buttons.items():
                 if button.handle_event(event):
                     if name == "opcoes":
-                        self.difficulty_selection = DifficultySelection()
+                        self.difficulty_selection = DifficultySelection(
+                            self.selected_difficulty
+                        )
                         self.difficulty_selection.run()
+                        self.selected_difficulty = (
+                            self.difficulty_selection.selected_difficulty
+                        )
 
             if event.type == pygame.QUIT:
                 self.running = False
