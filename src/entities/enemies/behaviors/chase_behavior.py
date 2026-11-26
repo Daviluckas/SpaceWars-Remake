@@ -19,5 +19,5 @@ class ChaseBehavior(BaseBehavior):
         if distance == 0:
             return
 
-        enemy.rect.x += round(dx / distance * self.speed)
-        enemy.rect.y += round(dy / distance * self.speed)
+        enemy.rect.x += round(dx / distance * self.speed * enemy.speed_multiplier)
+        enemy.rect.y += round(dy / distance * self.speed * enemy.speed_multiplier)

@@ -12,7 +12,7 @@ class FastBehavior(BaseBehavior):
         self.approach_speed = 1.5
 
     def update(self, enemy):
-        enemy.rect.x += self.speed * self.direction
+        enemy.rect.x += self.speed * enemy.speed_multiplier * self.direction
 
         if enemy.rect.right >= settings.SCREEN_WIDTH:
             enemy.rect.right = settings.SCREEN_WIDTH
@@ -22,4 +22,4 @@ class FastBehavior(BaseBehavior):
             enemy.rect.left = 0
             self.direction = 1
 
-        self.approach_player(enemy, self.approach_speed)
+        self.approach_player(enemy, self.approach_speed * enemy.speed_multiplier)

@@ -8,6 +8,7 @@ from src.entities.enemies.behaviors.horizontal_behavior import HorizontalBehavio
 from src.entities.enemies.behaviors.zigzag_behavior import ZigzagBehavior
 from src.entities.enemies.behaviors.chase_behavior import ChaseBehavior
 from src.entities.enemies.behaviors.fast_behavior import FastBehavior
+from src.core.difficulty_config import DIFFICULTY_CONFIG
 
 
 class EnemySpawner:
@@ -24,10 +25,15 @@ class EnemySpawner:
         self.atirador_projectile_frames = atirador_projectile_frames
 
 
+        self.difficulty_config = DIFFICULTY_CONFIG[
+            self.game.selected_difficulty
+        ]
+
+
         self.spawn_interval = random.randint(
             settings.ENEMY_SPAWN_MIN_INTERVAL,
             settings.ENEMY_SPAWN_MAX_INTERVAL
-        )
+        ) * self.difficulty_config["spawn_interval_multiplier"]
 
         self.last_spawn_time = pygame.time.get_ticks()
 
@@ -42,7 +48,7 @@ class EnemySpawner:
             self.spawn_interval = random.randint(
                 settings.ENEMY_SPAWN_MIN_INTERVAL,
                 settings.ENEMY_SPAWN_MAX_INTERVAL
-            )
+            ) * self.difficulty_config["spawn_interval_multiplier"]
 
     def spawn_enemy(self):
         behavior, image, behavior_name = self.choose_behavior()

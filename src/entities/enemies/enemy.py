@@ -14,7 +14,7 @@ class Enemy(Entity):
         game,
         image,
         x,
-        y,
+        y,  
         health=1,
         behavior=None,
         animation_frames=None,
@@ -25,6 +25,7 @@ class Enemy(Entity):
 
         self.health = health
         self.behavior = behavior if behavior is not None else HorizontalBehavior()
+        self.speed_multiplier = self.game.difficulty_config["enemy_speed_multiplier"]
 
         self.movement_frames = animation_frames
         self.shooting_frames = shooting_frames
@@ -35,7 +36,7 @@ class Enemy(Entity):
         self.is_shooting = False
         self.has_shot = False
         self.projectile_timer = pygame.time.get_ticks()
-        self.projectile_interval = 2500
+        self.projectile_interval = int(2500 * self.game.difficulty_config["projectile_interval_multiplier"])
 
         if self.movement_frames:
             self.animation = Animation(self.movement_frames)

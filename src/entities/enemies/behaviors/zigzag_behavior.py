@@ -16,8 +16,8 @@ class ZigzagBehavior(BaseBehavior):
         self.change_direction_interval = random.randint(20, 45)
 
     def update(self, enemy):
-        enemy.rect.x += self.speed * self.direction
-        enemy.rect.y += self.vertical_speed * self.vertical_direction
+        enemy.rect.x += self.speed * enemy.speed_multiplier * self.direction
+        enemy.rect.y += self.vertical_speed * enemy.speed_multiplier * self.vertical_direction
 
         self.change_direction_timer += 1
 
@@ -33,4 +33,4 @@ class ZigzagBehavior(BaseBehavior):
             enemy.rect.left = 0
             self.direction = 1
 
-        self.approach_player(enemy, self.approach_speed)
+        self.approach_player(enemy, self.approach_speed * enemy.speed_multiplier)

@@ -11,6 +11,7 @@ from src.ui.hud import HUD
 from src.systems.background import Background
 from src.entities.explosion import Explosion
 from src.screens.difficulty_selection import DifficultySelection
+from src.core.difficulty_config import DIFFICULTY_CONFIG
 
 
 class Game:
@@ -43,6 +44,11 @@ class Game:
         self.game_over = False
         self.score = 0
         self.selected_difficulty = selected_difficulty
+
+        self.difficulty_config = DIFFICULTY_CONFIG[
+            self.selected_difficulty
+        ]
+
         self.hud = HUD(self)
 
         self.enemies = pygame.sprite.Group()
@@ -304,7 +310,7 @@ class Game:
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.player.shoot()
-                    
+
 
     def update(self):
         if self.game_over:
