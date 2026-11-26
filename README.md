@@ -1,49 +1,54 @@
-# Space Wars Remake
+# 🚀 Space Wars Remake
 
-A remake of an academic 2D arcade game inspired by **Space Invaders**, featuring satire of the Star Wars universe.
+Um remake de um jogo acadêmico de arcade 2D inspirado em **Space Invaders**, com elementos de sátira ao universo de Star Wars.
 
-This project aims to rebuild the original Space Wars with a more organized, modular and maintainable architecture, while preserving its original identity and improving its gameplay and visual experience.
+Este projeto tem como objetivo reconstruir o jogo original Space Wars, explorando uma arquitetura mais organizada, modular e de fácil manutenção, além de aprimorar sua experiência visual e jogabilidade.
 
-## About the Project
+## 🎮 Sobre o projeto
 
-Space Wars was originally developed as an academic project using Python and Pygame.
+O Space Wars foi originalmente desenvolvido como um projeto acadêmico utilizando Python e Pygame.
 
-The remake is an independent continuation of that project, focused on improving code structure, implementation quality and extensibility.
+O Space Wars Remake é uma continuação independente desse projeto, criada principalmente por diversão, aprendizado e interesse em desenvolvimento de jogos.
 
-## Technologies
+**Este projeto está sendo desenvolvido com o auxílio de ferramentas de Inteligência Artificial (IA).** A IA é utilizada como apoio durante o planejamento, a implementação, a organização do código e a resolução de problemas.
+
+A proposta não é desenvolver um produto comercial ou demonstrar uma experiência profissional de desenvolvimento, mas aproveitar o processo, experimentar ideias, aprender e se divertir construindo uma nova versão do jogo.
+
+## 🛠️ Tecnologias
 
 - Python
 - Pygame
+- OpenCV
 
-## Main Goals
+## 🎯 Objetivos
 
-- Refactor and improve the original game mechanics.
-- Establish a modular and maintainable architecture.
-- Improve the visual experience while preserving the original identity.
-- Make sprites, sounds, animations and other assets easier to update.
-- Facilitate the addition of new enemies, power-ups and gameplay features.
-- Improve performance and code reliability.
+- Reorganizar e aprimorar as mecânicas do jogo original.
+- Desenvolver uma arquitetura modular e de fácil manutenção.
+- Melhorar a experiência visual, preservando a identidade original.
+- Facilitar a atualização de sprites, sons, animações e outros recursos.
+- Permitir a adição de novos inimigos, melhorias e funcionalidades.
+- Explorar novas ideias e aprender durante o desenvolvimento.
 
-## Project Structure
+## 📁 Estrutura do projeto
 
-The project structure will be defined and implemented gradually throughout development.
+A estrutura de diretórios está sendo organizada e implementada gradualmente ao longo do desenvolvimento.
 
-## Installation
+## ⚙️ Instalação e execução
 
-Installation and execution instructions will be added as the project setup is completed.
+As instruções de instalação e execução serão documentadas conforme a configuração do projeto evoluir.
 
-## Original Project
+## 🔗 Projeto original
 
-The original academic project can be found here:
+O projeto acadêmico que deu origem a este remake pode ser encontrado no repositório:
 
-[Space Wars – Original Repository](https://github.com/Daviluckas/SpaceWars)
+[Space Wars – Repositório original](https://github.com/Daviluckas/SpaceWars)
 
-## Status
+## 📌 Status
 
-**Under development.**
+**Em desenvolvimento.**
 
-This project is currently in its initial restructuring phase.
+O projeto está passando por uma reconstrução gradual, com implementação de novas funcionalidades, organização do código e aprimoramento visual.
 
 ---
 
-Developed by [Daviluckas](https://github.com/Daviluckas).
+Desenvolvido por [Daviluckas](https://github.com/Daviluckas), com auxílio de Inteligência Artificial e, acima de tudo, por diversão. 🚀
