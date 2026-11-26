@@ -49,7 +49,13 @@ class MainMenu:
         for event in pygame.event.get():
             for name, button in self.buttons.items():
                 if button.handle_event(event):
-                    if name == "opcoes":
+                    if name == "jogar":
+                        from src.core.game import Game
+
+                        game = Game(self.selected_difficulty)
+                        game.run()
+
+                    elif name == "opcoes":
                         self.difficulty_selection = DifficultySelection(
                             self.selected_difficulty
                         )

@@ -10,10 +10,11 @@ from src.systems.enemy_spawner import EnemySpawner
 from src.ui.hud import HUD
 from src.systems.background import Background
 from src.entities.explosion import Explosion
+from src.screens.difficulty_selection import DifficultySelection
 
 
 class Game:
-    def __init__(self):
+    def __init__(self, selected_difficulty="medium"):
         pygame.init()
 
         self.assets = AssetManager()
@@ -41,6 +42,7 @@ class Game:
         self.running = True
         self.game_over = False
         self.score = 0
+        self.selected_difficulty = selected_difficulty
         self.hud = HUD(self)
 
         self.enemies = pygame.sprite.Group()
@@ -302,6 +304,7 @@ class Game:
             elif event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_SPACE:
                     self.player.shoot()
+                    
 
     def update(self):
         if self.game_over:
@@ -425,5 +428,3 @@ class Game:
             self.draw()
 
             self.clock.tick(settings.FPS)
-
-        pygame.quit()

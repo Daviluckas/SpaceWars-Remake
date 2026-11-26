@@ -11,7 +11,7 @@ from src.entities.enemies.behaviors.fast_behavior import FastBehavior
 
 
 class EnemySpawner:
-    def __init__(self, game, enemies, images, blindado_frames, zigue_zague_frames, veloz_frames, perseguidor_frames, atirador_movement_frames, atirador_shooting_frames):
+    def __init__(self, game, enemies, images, blindado_frames, zigue_zague_frames, veloz_frames, perseguidor_frames, atirador_movement_frames, atirador_shooting_frames, atirador_projectile_frames):
         self.game = game
         self.enemies = enemies
         self.images = images
@@ -21,6 +21,7 @@ class EnemySpawner:
         self.perseguidor_frames = perseguidor_frames 
         self.atirador_movement_frames = atirador_movement_frames
         self.atirador_shooting_frames = atirador_shooting_frames
+        self.atirador_projectile_frames = atirador_projectile_frames
 
 
         self.spawn_interval = random.randint(
@@ -80,7 +81,8 @@ class EnemySpawner:
             y,
             behavior=behavior,
             animation_frames=animation_frames,
-            shooting_frames=shooting_frames
+            shooting_frames=shooting_frames,
+            projectile_frames=self.atirador_projectile_frames
         )
 
         self.enemies.add(enemy)
