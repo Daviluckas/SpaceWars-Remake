@@ -9,6 +9,7 @@ from src.systems.video_background import VideoBackground
 from src.core.asset_manager import AssetManager
 from src.systems.menu_button import MenuButton
 from src.systems.zorg_animation import ZorgAnimation
+from src.screens.difficulty_selection import DifficultySelection
 
 
 ASSETS_DIR = Path(__file__).resolve().parents[3] / "assets"
@@ -45,9 +46,11 @@ class MainMenu:
 
     def handle_events(self):
         for event in pygame.event.get():
-            for button in self.buttons.values():
-                button.handle_event(event)
-
+            for name, button in self.buttons.items():
+                if button.handle_event(event):
+                    if name == "opcoes":
+                        self.difficulty_selection = DifficultySelection()
+                        self.difficulty_selection.run()
 
             if event.type == pygame.QUIT:
                 self.running = False
