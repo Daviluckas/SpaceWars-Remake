@@ -8,6 +8,7 @@ from src.core import settings
 from src.systems.video_background import VideoBackground
 from src.core.asset_manager import AssetManager
 from src.systems.menu_button import MenuButton
+from src.systems.zorg_animation import ZorgAnimation
 
 
 ASSETS_DIR = Path(__file__).resolve().parents[3] / "assets"
@@ -31,6 +32,14 @@ class MainMenu:
         )
 
         self.assets = AssetManager()
+
+        self.load_zorg_frames()
+        self.zorg = ZorgAnimation(
+            self.zorg_frames,
+            settings.SCREEN_WIDTH - 320 - 40,
+            400
+        )
+
         self.load_buttons()
         self.create_buttons()
 
@@ -39,7 +48,7 @@ class MainMenu:
             for button in self.buttons.values():
                 button.handle_event(event)
 
-                
+
             if event.type == pygame.QUIT:
                 self.running = False
 
@@ -125,11 +134,25 @@ class MainMenu:
             }
 
 
+    def load_zorg_frames(self):
+        self.zorg_frames = []
+
+        for i in range(1, 9):
+            frame = self.assets.load_image(
+                f"zorg_panel_frame_{i}",
+                f"sprites/menu/zorg-9000/zorg_panel_frame_{i}.png"
+            )
+
+            self.zorg_frames.append(frame)
+
+
     def update(self):
         self.background.update()
 
         for button in self.buttons.values():
             button.update()
+
+        self.zorg.update()
 
 
     def draw(self):
@@ -137,6 +160,8 @@ class MainMenu:
 
         for button in self.buttons.values():
             button.draw(self.screen)
+
+        self.zorg.draw(self.screen)
 
         pygame.display.flip()
 
