@@ -352,7 +352,7 @@ class Game:
         for enemies_hit in collisions.values():
             for enemy in enemies_hit:
                 if enemy.take_damage():
-                    self.score += settings.ENEMY_SCORE
+                    self.score += self.difficulty_config["score"]
 
         player_collision = pygame.sprite.spritecollide(
             self.player,

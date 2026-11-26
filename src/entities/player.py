@@ -23,7 +23,7 @@ class Player(Entity):
 
         self.projectiles = pygame.sprite.Group()
         self.projectile_frames = projectile_frames
-        self.lives = settings.PLAYER_LIVES
+        self.lives = self.game.difficulty_config["lives"]
         self.destroyed = False
 
         self.thruster_animation = Animation(
