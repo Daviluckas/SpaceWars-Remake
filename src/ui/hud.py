@@ -7,7 +7,8 @@ from src.core import settings
 class HUD:
     def __init__(self, game):
         self.game = game
-        self.font = pygame.font.Font(None, 28)
+        self.font = pygame.font.Font("assets/fonts/PressStart2P-Regular.ttf", 16)
+        self.score_medal = self.game.assets.load_image("score_medal", "sprites/score_medal.png")
 
         difficulty = self.game.selected_difficulty
 
@@ -33,12 +34,17 @@ class HUD:
         self.game.screen.blit(life_frame, (20, 15))
 
         score_text = self.font.render(
-            f"Pontuação: {self.game.score}",
+            str(self.game.score),
             True,
-            settings.WHITE
+            (252, 211, 77)
         )
 
-        self.game.screen.blit(
-            score_text,
-            (settings.SCREEN_WIDTH - score_text.get_width() - 20, 15)
+        medal = pygame.transform.scale(
+            self.score_medal,
+            (36, 36)
         )
+
+        score_x = settings.SCREEN_WIDTH - score_text.get_width() - 65
+
+        self.game.screen.blit(medal, (score_x, 10))
+        self.game.screen.blit(score_text, (score_x + 36, 21))
